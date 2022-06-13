@@ -33,8 +33,8 @@ Dim reportSheet As Worksheet
 
 Set MyRange = Selection
 
-Set reportSheet = ActiveWorkbook.Sheets("Wypowiedzenie")
-Set detailsSheet = ActiveWorkbook.Sheets("Arkusz1")
+Set reportSheet = ActiveWorkbook.Sheets("Wypowiedzenie OC")
+Set detailsSheet = ActiveWorkbook.Sheets("BAZA 2014")
 
 Application.ScreenUpdating = False
 
@@ -89,10 +89,20 @@ Else
 End If
 
 
+
+
+
+If Len(Dir("C:\Users\user\Desktop\ ")) = 0 Then
+    Path = "C:\Users\PipBoy3000\Desktop\"
+Else
+    Path = "C:\Users\user\Desktop\ "
+End If
+
+
     
 'Save the PDF file
 reportSheet.ExportAsFixedFormat Type:=xlTypePDF, Filename:= _
-    "C:\Users\PipBoy3000\Desktop\Wypowiedzenie OC " & NameOrCompany, Quality:=xlQualityStandard, _
+    Path & NameOrCompany, Quality:=xlQualityStandard, _
     IncludeDocProperties:=True, IgnorePrintAreas:=False, _
     OpenAfterPublish:=False
 
@@ -100,6 +110,8 @@ reportSheet.ExportAsFixedFormat Type:=xlTypePDF, Filename:= _
 Application.ScreenUpdating = True
 
 End Sub
+
+
 
 
 

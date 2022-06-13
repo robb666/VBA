@@ -1,0 +1,105 @@
+Sub ExportingPDF()
+
+
+Dim cell As Range
+Dim MyRange As Range
+Dim tmp As String
+
+
+Dim dict As New Dictionary
+
+
+dict.Add "ALL", "Allianz"
+dict.Add "COM", "Compensa"
+dict.Add "EIN", "Euroins"
+dict.Add "GEN", "Generali"
+dict.Add "HDI", "HDI"
+dict.Add "HES", "Ergo Hestia"
+dict.Add "LIN", "LINK 4"
+dict.Add "MTU", "MTU (Hestia)"
+dict.Add "PRO", "Proama"
+dict.Add "EPZU", "PZU"
+dict.Add "RIS", "InterRisk"
+dict.Add "UNI", "Uniqa"
+dict.Add "WAR", "Warta"
+dict.Add "WIE", "Wiener"
+dict.Add "YCD", "You Can Drive"
+
+
+
+'Defining worksheets
+Dim detailsSheet As Worksheet
+Dim reportSheet As Worksheet
+
+Set MyRange = Selection
+
+Set reportSheet = ActiveWorkbook.Sheets("Wypowiedzenie")
+Set detailsSheet = ActiveWorkbook.Sheets("Arkusz1")
+
+Application.ScreenUpdating = False
+
+'Looping the through each row
+
+i = ActiveCell.Row
+
+'Assigning values
+Name = detailsSheet.Cells(i, 13)
+Surname = detailsSheet.Cells(i, 12)
+Company = detailsSheet.Cells(i, 11)
+ID = detailsSheet.Cells(i, 14)
+Make = detailsSheet.Cells(i, 23)
+Model = detailsSheet.Cells(i, 24)
+Plates = detailsSheet.Cells(i, 25)
+Insurer = detailsSheet.Cells(i, 38)
+PolicyNo = detailsSheet.Cells(i, 40)
+
+
+If Not IsEmpty(ID) Then
+    ID = ID
+Else
+    MsgBox "Brak numeru PESEL lub REGON w Bazie. Uzupełnij !"
+    End
+End If
+
+
+If dict.Exists(Insurer) Then
+    Insurer = dict(Insurer)
+Else
+    Insurer = Insurer
+End If
+
+
+
+'Generating the output
+reportSheet.Cells(4, 2).Value = Name
+reportSheet.Cells(5, 2).Value = Surname
+reportSheet.Cells(6, 2).Value = Company
+reportSheet.Cells(7, 2).NumberFormat = "@"
+reportSheet.Cells(7, 2).Value = Right(ID, Len(ID) - 1)
+reportSheet.Cells(8, 2).Value = Make
+reportSheet.Cells(9, 2).Value = Model
+reportSheet.Cells(10, 2).Value = Plates
+reportSheet.Cells(11, 2).Value = PolicyNo
+reportSheet.Cells(12, 2).Value = Insurer
+
+If Not IsEmpty(Name) Then
+    NameOrCompany = Name
+Else
+    NameOrCompany = Company
+End If
+
+
+    
+'Save the PDF file
+reportSheet.ExportAsFixedFormat Type:=xlTypePDF, Filename:= _
+    "C:\Users\PipBoy3000\Desktop\Wypowiedzenie OC " & NameOrCompany, Quality:=xlQualityStandard, _
+    IncludeDocProperties:=True, IgnorePrintAreas:=False, _
+    OpenAfterPublish:=False
+
+
+Application.ScreenUpdating = True
+
+End Sub
+
+
+

@@ -79,6 +79,7 @@ reportSheet.Cells(7, 2).Value = Right(ID, Len(ID) - 1)
 reportSheet.Cells(8, 2).Value = Make
 reportSheet.Cells(9, 2).Value = Model
 reportSheet.Cells(10, 2).Value = Plates
+reportSheet.Cells(11, 2).NumberFormat = "@"
 reportSheet.Cells(11, 2).Value = PolicyNo
 reportSheet.Cells(12, 2).Value = Insurer
 

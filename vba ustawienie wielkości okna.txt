@@ -1,0 +1,29 @@
+Public Sub Workbook_Open()
+    Dim iMaxWidth As Integer    'Screen width (pixels)
+    Dim iMaxHeight As Integer   'Screen height (pixels)
+    Dim sngStartX As Single     'Upper-left corner of desired window
+    Dim sngStartY As Single     'Upper-left corner of desired window
+    Dim sngWidth As Single      'Width of desired window
+    Dim sngHeight As Single     'Height of desired window
+
+    'Specifications for final window size
+    sngStartX = 0#       'Fraction of screen width from left edge
+    sngStartY = 0.5   'Fraction of screen height from top
+    sngWidth = 1#     'Fraction of screen width desired
+    sngHeight = 0.495    'Fraction of screen height desired
+
+    With Application
+        'Maximize screen in order to grab maximum width and height
+        .WindowState = xlMaximized
+        iMaxWidth = .Width
+        iMaxHeight = .Height
+        .WindowState = xlNormal
+
+        'Set final window position and size
+        .Top = iMaxHeight * sngStartY
+        .Left = iMaxWidth * sngStartX
+        .Width = sngWidth * iMaxWidth
+        .Height = sngHeight * iMaxHeight
+    End With
+End Sub
+
